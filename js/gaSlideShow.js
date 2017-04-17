@@ -3,9 +3,10 @@
         id: 'UA-97482190-1',
         method: 'create'
     };
-    GASlideShow.init(sendInit)
+
     var GASlideShow = new(function() {
         this.init = function(param) {
+            includeGAProgram(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga(param.method, param.id, 'auto');
             ga('send', 'pageview');
         };
@@ -21,8 +22,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m);
         }
-
-        includeGAProgram(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
     })();
+
+    GASlideShow.init(sendInit);
 }());
