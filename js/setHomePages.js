@@ -25,6 +25,7 @@
         }
     }
     getBtn.addEventListener('click', function(e) {
+    	console.log('click');
         gogogo();
     });
 }());
