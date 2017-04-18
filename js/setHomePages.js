@@ -5,21 +5,28 @@
     var url = window.location.href,
         title = 'title';
 
-    function addFavorite(url, title) {
-        if (window.external && 'addFavorite' in window.external) { // IE
-            window.external.addFavorite(url, title);
-        } else if (window.sidebar && window.sidebar.addPanel) { // Firefox23后被弃用
-            window.sidebar.addPanel(url, title);
-        } else if (window.opera && window.print) { // rel=sidebar，读取a链接的href，title 注：opera也转战webkit内核了
-            this.title = title;
-            return true;
-        } else { // webkit - safari/chrome
-            alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
+    var setHome = function() {
+        if (document.all) {
+            document.body.style.behavior = 'url(#default#homepage)';
+            document.body.setHomePage(url);
+        } else if (window.sidebar) {
+            if (window.netscape) {
+                try {
+                    netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+                } catch (e) {
+                    console.log('the web is not support');
+                }
+            }
+            var prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);　　　　
+            prefs.setCharPref('browser.startup.homepage', url);
         }
     }
     getBtn.addEventListener('click', function(e) {
-        console.log('click');
-        addFavorite(url, title);
         e.preventDefault();
+        console.log('click');
+        setHome();
+        if (typeof ga != 'undefined') {
+            ga('send', 'event', 'click', e.currentTarget, 'setHomePage');
+        }
     });
 }());
