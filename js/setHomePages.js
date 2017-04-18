@@ -26,7 +26,7 @@
         console.log('click');
         setHome();
         if (typeof ga != 'undefined') {
-            ga('send', 'event', 'click', e.currentTarget, 'setHomePage');
+            ga('send', 'event', 'click', 'setHome', 'setHomePage');
         }
     });
 }());
