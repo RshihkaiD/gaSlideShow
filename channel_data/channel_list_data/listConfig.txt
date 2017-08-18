@@ -8,7 +8,7 @@
       "link": "",
       "display": false
     },
-    "floatController": false,
+    "floatController": true,
     "information": [
       {
         "title": "新聞",
